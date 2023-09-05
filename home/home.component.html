@@ -1,0 +1,107 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <div class="">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="card info-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Employees</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-people"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{employee}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card info-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Departments</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-bank"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{department}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card info-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Projects</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-folder2-open"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{mission}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card info-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Active Users</h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-person-check"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{user}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body">
+                                    <canvas baseChart
+                                    [datasets]="barChartData"
+                                    [labels]="barChartLabels"
+                                    [options]="barChartOptions"
+                                    [plugins]="barChartPlugins"
+                                    [legend]="barChartLegend"
+                                    [type]="barChartType">
+                                    </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

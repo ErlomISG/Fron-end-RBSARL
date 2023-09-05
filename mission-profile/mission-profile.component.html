@@ -1,0 +1,154 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Project Details</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+                <li class="breadcrumb-item"><a routerLink="/mission">Projects/Mission</a></li>
+                <li class="breadcrumb-item">Project Details</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-xl-6">
+              <div class="card">
+                <div class="card-body profile-card">
+                    <h2 class="card-title">Project Details</h2>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 label">Project Name:</div>
+                        <div class="col-lg-6 col-md-6">{{missionName}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 label">Start date:</div>
+                        <div class="col-lg-6 col-md-6">{{startedAt}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 label">End Date:</div>
+                        <div class="col-lg-6 col-md-6">{{finishedAt}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 label">Project Status:</div>
+                        <div class="col-lg-6 col-md-6">{{missionStatus}}</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-12">
+              <div class="card">
+                <div class="card-body pt-3">
+                  <!-- Bordered Tabs -->
+                  <ul class="nav nav-tabs nav-tabs-bordered">
+                    <li class="nav-item">
+                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-employee">List of Employees in the Project</button>
+                    </li>
+
+                    <li class="nav-item">
+                      <button class="nav-link" (click)="getAllEmployeeWithoutMission(missionId)" data-bs-toggle="tab" data-bs-target="#profile-allocate">Allocate Employee</button>
+                    </li>
+                  </ul>
+                  <div class="tab-content pt-2">
+
+                    <div class="tab-pane fade show active profile-employee" id="profile-employee">
+
+                      <div class="search-bar" style="margin-bottom: 25px;">
+                        <form class="search-form row g-2">
+                          <div class="col-md-5" style=" margin-left:20px; position:absolute; right:0px; top:35px;">
+                            <input type="text" name="firstname" placeholder="search by name" title="Enter the name">
+                            <button type="submit" disabled title="To look for"><i class="bi bi-search"></i></button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- Table with stripped rows -->
+                      <table id="datatable" class="table datatable table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Actionsc</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let employee of employees |  paginate: { itemsPerPage: 8, currentPage: page, totalItems: total};">
+                            <th scope="row">{{employee.id}}</th>
+                            <td>{{employee.firstname}}</td>
+                            <td>{{employee.lastname}}</td>
+                            <td>{{employee.email}}</td>
+                            <td>{{employee.positionResponse.positionName}}</td>
+                            <td>{{employee.department.name}}</td>
+                            <td>
+                              <button style="width: 40px; margin-right: 2px;" class="bi bi-person-square btn btn-info"
+                                [routerLink]="['/employeeProfile', employee.id]" title="View profile"></button>
+                              <button style="width: 40px;" [routerLink]="['/employeeAdd', employee.id]"
+                                class="bi bi-pencil-square btn btn-warning" title="Edit"></button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- End Table with stripped rows -->
+                      <div class="text-center">
+                        <pagination-controls (pageChange)="loadPage(missionId, page = $event)"  previousLabel="Previous" nextLabel="Next"></pagination-controls>
+                      </div>
+                    </div>
+
+                    <div class="tab-pane fade profile-allocate pt-3" id="profile-allocate">
+                      <div class="search-bar" style="margin-bottom: 25px;">
+                        <form class="search-form row g-2">
+                          <div class="col-md-5" style=" margin-left:20px; position:absolute; right:0px; top:35px;">
+                            <input type="text" name="firstname" placeholder="search by name" title="Enter the name">
+                            <button type="submit" disabled title="To look for"><i class="bi bi-search"></i></button>
+                          </div>
+                        </form>
+                      </div>
+                      <!-- Table with stripped rows -->
+                      <table id="datatable" class="table datatable table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Postion</th>
+                            <th scope="col">Departement</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let employee of employeesWithoutMission |  paginate: { itemsPerPage: 8, currentPage: page, totalItems: totall};">
+                            <th scope="row">{{employee.id}}</th>
+                            <td>{{employee.firstname}}</td>
+                            <td>{{employee.lastname}}</td>
+                            <td>{{employee.email}}</td>
+                            <td>{{employee.positionResponse.positionName}}</td>
+                            <td>{{employee.department.name}}</td>
+                            <td>
+                              <button (click)="addEmployeeToMission(employee.id, missionId)" class="bi bi-plus-square btn btn-info" title="Add to Project"> Add</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- End Table with stripped rows -->
+                      <div class="text-center">
+                        <pagination-controls (pageChange)="loadPageWhithout(missionId, page = $event)"  previousLabel="Previous" nextLabel="Next"></pagination-controls>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+    </section>
+</main>

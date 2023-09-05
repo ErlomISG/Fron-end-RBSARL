@@ -1,0 +1,29 @@
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c384e;
+    margin: 10px 0 0 0;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+div.row {
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+h5 {
+    color: #012970;
+}
+
+div.label {
+    font-weight: 600;
+    color: rgba(1, 41, 112, 0.6);
+}
+
+label {
+    font-weight: 600;
+    color: rgba(1, 41, 112, 0.6);
+}

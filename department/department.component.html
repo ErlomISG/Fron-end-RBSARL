@@ -1,0 +1,92 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Department</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+                <li class="breadcrumb-item">Department</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-4">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Department</h5>
+                        <form class="row g-3" [formGroup]="departmentForm" (ngSubmit)="createDepartment()">
+                            <div class="col-12">
+                                <label for="id" class="form-label">ID</label>
+                                <input type="text" [formControlName]="'id'" class="form-control" id="id">
+                            </div>
+                            <div class="col-12">
+                                <label for="name" class="form-label">Department name</label>
+                                <input type="text" [formControlName]="'name'" class="form-control" id="name" placeholder="Example: IT department">
+                            </div>
+                            <div class="col-12">
+                                <label for="abrev" class="form-label">Compartment</label>
+                                <input type="text" [formControlName]="'shortName'" class="form-control" id="abrev" placeholder="Example: TI">
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary"
+                                    style="margin-right: 3px; width: 95px;">Save</button>
+                                <button type="reset" class="btn btn-warning" style="width: 95px;"
+                                    (click)="cleanForm()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Department List</h5>
+                        <div class="search-bar" style="margin-bottom: 25px;">
+                            <form class="search-form row g-2" [formGroup]="searchForm"
+                                (ngSubmit)="searchDepartmentByName()">
+                                <div class="col-md-5" style="position:absolute; right:0px; top:35px;">
+                                    <input type="text" [formControlName]="'departmentName'" name="departmentName"
+                                        placeholder="search by department" title="Enter department name">
+                                    <button type="submit" title="look for"><i class="bi bi-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Compartment</th>
+                                    <th scope="col">Quantity.</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let department of departments | paginate: { itemsPerPage: 8, currentPage: page, totalItems: total}">
+                                    <th scope="row">{{department.id}}</th>
+                                    <td>{{department.name}}</td>
+                                    <td>{{department.shortName}}</td>
+                                    <td>{{department.employeeQuantity}}</td>
+                                    <td>
+                                        <button style="width: 40px; margin-right: 2px;" [routerLink]="['/departmentDetails', department.id]"
+                                            class="bi bi-eye-fill btn btn-info" title="See Department"></button>
+                                        <button style="width: 40px; margin-right: 2px;" (click)="deleteDepartment(department.id)"
+                                            class="bi bi-trash btn btn-danger" title="Delete"></button>
+                                        <button style="width: 40px;" class="bi bi-pencil-square btn btn-warning"
+                                           (click)="fillForm(department.id)" title="Edit"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <pagination-controls (pageChange)="loadPage(page = $event)" previousLabel="Previous"nextLabel="Next"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,74 @@
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Employee</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item active">Employees</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-md-3" style="margin-bottom: 10px;">
+        <button routerLink="/employeeAdd" class="btn btn-primary bi bi-plus-square"> To add</button>
+      </div>
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">List of Employees</h5>
+            <div class="search-bar" style="margin-bottom: 25px;">
+              <form class="search-form row g-2" [formGroup]="searchForm" (ngSubmit)="searchEmployeeByFirstname()">
+                <div class="col-md-5" style=" margin-left:20px; position:absolute; right:0px; top:35px;">
+                  <input type="text" [formControlName]="'firstname'" name="firstname" placeholder="search by name" title="Enter the name">
+                  <button type="submit" title="look for"><i class="bi bi-search"></i></button>
+                </div>
+              </form>
+            </div>
+            <!-- Table with stripped rows -->
+            <table id="datatable" class="table datatable table-striped table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Surname</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Birthday</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let employee of employees |  paginate: { itemsPerPage: 8, currentPage: page, totalItems: total}; let i = index">
+                  <th scope="row">{{employee.id}}</th>
+                  <td>{{employee.firstname}}</td>
+                  <td>{{employee.lastname}}</td>
+                  <td>{{employee.email}}</td>
+                  <td>{{employee.birthdate}}</td>
+                  <td>{{employee.department.name}}</td>
+                  <td>
+                    <button style="width: 40px; margin-right: 2px;" class="bi bi-person-square btn btn-info"
+                      [routerLink]="['/employeeProfile', employee.id]" title="View profile"></button>
+                    <button style="width: 40px; margin-right: 2px;" class="bi bi-trash btn btn-danger"
+                      (click)="deleteEmployee(employee.id, i)" title="Delete"></button>
+                    <button style="width: 40px;" [routerLink]="['/employeeAdd', employee.id]"
+                      class="bi bi-pencil-square btn btn-warning" title="Edit"></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+            <div class="text-center">
+              <pagination-controls (pageChange)="loadPage(page = $event)" previousLabel="Previous" nextLabel="Next"></pagination-controls>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main><!-- End #main -->

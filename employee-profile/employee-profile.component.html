@@ -1,0 +1,213 @@
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>Employee Profile</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/employee">Employees</a></li>
+        <li class="breadcrumb-item">Employee Profile</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-xl-4">
+        <div class="card text-center">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+            <img [src]="url" height="125" alt="Profile" class="rounded-circle">
+            <h2>{{firstname}} {{lastname}}</h2>
+            <h3>{{position}}</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-project">Project List</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-allocate">Allocate to a project</button>
+              </li>
+
+            </ul>
+            <div class="tab-content pt-2">
+
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                <h5 class="card-title">Profile Details</h5>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Id:</div>
+                  <div class="col-lg-8 col-md-6">{{id}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Identification code:</div>
+                  <div class="col-lg-8 col-md-6">{{employeeIdentifier}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Full name:</div>
+                  <div class="col-lg-8 col-md-6">{{firstname}} {{lastname}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Email:</div>
+                  <div class="col-lg-8 col-md-6">{{email}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Birthday:</div>
+                  <div class="col-lg-8 col-md-6">{{birthdate}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Position:</div>
+                  <div class="col-lg-8 col-md-6">{{position}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Department:</div>
+                  <div class="col-lg-8 col-md-6">{{department}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Salary:</div>
+                  <div class="col-lg-8 col-md-6">{{salary}}.00 MZN</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Street:</div>
+                  <div class="col-lg-8 col-md-6">{{street}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">House Number:</div>
+                  <div class="col-lg-6 col-md-6">{{houseNumber}}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-4 col-md-6 label">Postal Code:</div>
+                  <div class="col-lg-6 col-md-6">{{zipCode}}</div>
+                </div>
+
+                <form>
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-6 col-lg-4 col-form-label">Image:</label>
+                    <div class="col-md-6 col-lg-6">
+                      <input type="file" (change)="onSelectedFile($event)" class="form-control" title="upload">
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary bi bi-upload" style="width: 150px;"
+                      (click)="onUpload(id)" title="Save Image"> Save</button>
+                  </div>
+                </form>
+              </div>
+
+
+
+              <div class="tab-pane fade profile-project" id="profile-project">
+                <div class="search-bar" style="margin-bottom: 25px;">
+                  <form class="search-form row g-2">
+                    <div class="col-md-5" style="position:absolute; right:0px; top:35px;">
+                      <input type="text" name="missionName" placeholder="Search by project"
+                        title="Enter the project name">
+                      <button type="submit" disabled title="To look for"><i class="bi bi-search"></i></button>
+                    </div>
+                  </form>
+
+                </div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Project Name</th>
+                      <th scope="col">Start</th>
+                      <th scope="col">End</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let mission of missions | paginate: { itemsPerPage: 8, currentPage: page, totalItems: total}">
+                      <th scope="row">{{mission.id}}</th>
+                      <td>{{mission.missionName}}</td>
+                      <td>{{mission.startedDate}}</td>
+                      <td>{{mission.finishedDate}}</td>
+                      <td>{{mission.missionStatus.missionStatus}}</td>
+                      <td>
+                        <button style="width: 40px; margin-right: 2px;" [routerLink]="['/missionProfile', mission.id]"
+                          class="bi bi-eye-fill btn btn-info" title="View Project Details"></button>
+                        <button style="width: 40px; margin-right: 2px;" class="bi bi-trash btn btn-danger"
+                          title="Remove employee from project"></button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="text-center">
+                  <pagination-controls (pageChange)="loadPage(id, page = $event)" previousLabel="Previous"
+                    nextLabel="Next"></pagination-controls>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="profile-allocate">
+                <div class="search-bar" style="margin-bottom: 25px; margin-top: 25px;">
+                  <form [formGroup]="searchForm" (ngSubmit)="searchAllMissionByName()" class="search-form row g-2">
+                    <div class="col-md-5" style="position:absolute; right:0px; top:65px;;">
+                      <input type="text" name="missionName" [formControlName]="'missionName'"
+                        placeholder="Search by project" title="Search by project">
+                      <button type="submit" title="To look for"><i class="bi bi-search"></i></button>
+                    </div>
+                  </form>
+                </div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Project Name</th>
+                      <th scope="col">Start</th>
+                      <th scope="col">End</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let mission of missionData | paginate: { itemsPerPage: 8, currentPage: page, totalItems: total}">
+                      <th scope="row">{{mission.id}}</th>
+                      <td>{{mission.missionName}}</td>
+                      <td>{{mission.startedDate}}</td>
+                      <td>{{mission.finishedDate}}</td>
+                      <td>{{mission.missionStatus.missionStatus}}</td>
+                      <td>
+                        <button (click)="addMissionToEmployee(mission.id, id)" class="bi bi-plus-square btn btn-info"
+                          title="View Project Details"> Adicionar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="text-center">
+                  <pagination-controls previousLabel="Previous" nextLabel="Next"></pagination-controls>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,108 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Project/Mission</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+                <li class="breadcrumb-item">Project/Mission</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-4">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Project</h5>
+                        <form class="row g-3" [formGroup]="missionForm" (ngSubmit)="createMission()">
+                            <div class="col-12">
+                                <label for="id" class="form-label">ID</label>
+                                <input type="text" [formControlName]="'id'" class="form-control" id="id">
+                            </div>
+                            <div class="col-12">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" [formControlName]="'missionName'"
+                                    placeholder="Enter Project name" class="form-control" id="name">
+                            </div>
+                            <div class="col-12">
+                                <label for="finishedDate" class="form-label">End Date</label>
+                                <input type="date" [formControlName]="'finishedDate'" class="form-control"
+                                    id="finishedDate">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="status" class="form-label">Project Status</label>
+                                <select id="status" [formControlName]="'missionStatus'" class="form-select">
+                                    <option selected>Project Status</option>
+                                    <option *ngFor="let status of missionStatus">{{status.missionStatus}}</option>
+                                </select>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary"
+                                    style="margin-right: 3px; width: 95px;">Save</button>
+                                <button type="reset" class="btn btn-warning" style="width: 95px;"
+                                    (click)="cleanForm()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Project List</h5>
+                        <div class="search-bar" style="margin-bottom: 25px;">
+                            <form [formGroup]="searchForm" (ngSubmit)="searchAllMissionByName()"
+                                class="search-form row g-2">
+                                <div class="col-md-5" style="position:absolute; right:0px; top:35px;">
+                                    <input type="text" name="missionName" [formControlName]="'missionName'"
+                                        placeholder="Search by project" title="Enter the project name">
+                                    <button type="submit" title="To look for"><i class="bi bi-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Start</th>
+                                    <th scope="col">End</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let mission of missionResponse | paginate: { itemsPerPage: 8, currentPage: page, totalItems: total}">
+                                    <th scope="row">{{mission.id}}</th>
+                                    <td>{{mission.missionName}}</td>
+                                    <td>{{mission.startedDate}}</td>
+                                    <td>{{mission.finishedDate}}</td>
+                                    <td>{{mission.missionStatus.missionStatus}}</td>
+                                    <td>
+                                        <button style="width: 40px; margin-right: 2px;"
+                                            [routerLink]="['/missionProfile', mission.id]"
+                                            class="bi bi-eye-fill btn btn-info"
+                                            title="View Project Details"></button>
+                                        <button style="width: 40px; margin-right: 2px;"
+                                            (click)="deleteMission(mission.id)" class="bi bi-trash btn btn-danger"
+                                            title="Delete"></button>
+                                        <button style="width: 40px;" class="bi bi-pencil-square btn btn-warning"
+                                            (click)="fillForm(mission.id)" title="Edit"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <pagination-controls (pageChange)="loadPage(page = $event)" previousLabel="Previous"
+                                nextLabel="Next"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

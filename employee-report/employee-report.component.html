@@ -1,0 +1,55 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Employee Report</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+                <li class="breadcrumb-item"><a routerLink="/employee">Employees</a></li>
+                <li class="breadcrumb-item active">Report</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Report</h5>
+                        <form class="row g-3">
+
+                            <div class="col-6">
+                                <label for="name" class="form-label">Initial date</label>
+                                <input type="date" class="form-control" id="name">
+                            </div>
+                            <div class="col-6">
+                                <label for="finishedDate" class="form-label">end date</label>
+                                <input type="date" class="form-control" id="finishedDate">
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" (click)="downloadPdfReport()"
+                                    data-bs-toggle="modal" data-bs-target="#myModal"
+                                    style="margin-right: 3px; width: 95px;">Print out</button>
+                                <button type="reset" class="btn btn-warning" style="width: 95px;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <iframe id="pdf" width="100%" height="600" frameBorder="0" allowtransparece="true"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
